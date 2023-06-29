@@ -10,7 +10,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN addgroup --gid 777 --system app && \
     adduser --no-create-home --shell /bin/false --disabled-password --uid 777 --system --group app
 
-RUN chown app:app "/nonexistent/.cache/pip"
+RUN chown app:app /nonexistent/.cache/pip
 USER app
 
 RUN pip install -r requirements.txt
