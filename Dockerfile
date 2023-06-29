@@ -7,7 +7,7 @@ RUN python -m venv /opt/venv
 # Enable venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-RUN addgroup --gid 1001 --system app && \
+RUN addgroup --gid 777 --system app && \
     adduser --no-create-home --shell /bin/false --disabled-password --uid 1001 --system --group app
 USER app
 
