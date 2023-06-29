@@ -1,8 +1,8 @@
 version: "3"
 services:
-  telegram2elastic:
+  telegram2elasticgui:
     build:
-      context: git@github.com:Oriundi/Telegram2Elastic.git
+      context: git@github.com:Oriundi/Telegram2ElasticGUI.git
       dockerfile: Dockerfile
     volumes:
       - "./config/:/app/config"

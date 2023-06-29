@@ -1,13 +1,14 @@
 FROM python:3.10
 
-COPY output/*.py /app/output/
-COPY requirements.txt /app/
-COPY telegram2elastic.py /app/
-
 WORKDIR /app
+
+COPY pages/*.py /app/pages/
+COPY models/*.py /app/models/
+COPY requirements.txt /app/
+COPY t2e_gui.py /app/
 
 RUN pip install -r requirements.txt
 
-VOLUME /sessions
+VOLUME /config
 
-ENTRYPOINT ["/app/app.py"]
+ENTRYPOINT ["/app/t2e_gui.py"]
