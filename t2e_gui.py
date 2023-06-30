@@ -1,6 +1,6 @@
-import yaml
 from flask import Flask, redirect, url_for
 from flask_login import login_user, LoginManager, UserMixin, current_user
+import yaml
 
 import dash
 from dash import dcc, html, Input, Output, State
