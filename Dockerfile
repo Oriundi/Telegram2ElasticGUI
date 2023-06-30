@@ -28,4 +28,4 @@ COPY t2e_gui.py /app/
 VOLUME /config
 
 #ENTRYPOINT ["/app/t2e_gui.py"]
-CMD ["python", "app.py"]
+CMD ["python", "t2e_gui.py"]
