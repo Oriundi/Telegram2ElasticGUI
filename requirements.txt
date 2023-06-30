@@ -6,6 +6,7 @@ dash-html-components
 elasticsearch==8.8.0
 Flask
 Flask-Login
+gunicorn
 numpy
 pandas
 plotly

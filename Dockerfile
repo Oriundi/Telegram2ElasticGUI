@@ -26,5 +26,7 @@ COPY t2e_gui.py /app/
 
 VOLUME /config
 
+EXPOSE 8050
+
 #ENTRYPOINT ["/app/t2e_gui.py"]
 CMD ["python", "t2e_gui.py"]
