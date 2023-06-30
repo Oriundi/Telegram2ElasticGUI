@@ -3,9 +3,9 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
-#RUN python -m venv /opt/venv
+RUN python -m venv /opt/venv
 ## Enable venv
-#ENV PATH="/opt/venv/bin:$PATH"
+ENV PATH="/opt/venv/bin:$PATH"
 
 RUN addgroup --gid 777 --system app && \
     adduser --no-create-home --shell /bin/false --disabled-password --uid 777 --system --group app
@@ -15,11 +15,11 @@ RUN pip install -r requirements.txt
 
 USER app
 
-#FROM python:3.9-slim as runner
-#COPY --from=compiler /opt/venv /opt/venv
-#ENV PATH="/opt/venv/bin:$PATH"
+FROM python:3.9-slim as runner
+COPY --from=compiler /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-#WORKDIR /app/
+WORKDIR /app/
 COPY pages/*.py /app/pages/
 COPY models/*.py /app/models/
 COPY t2e_gui.py /app/
