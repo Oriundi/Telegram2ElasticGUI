@@ -8,6 +8,8 @@ import dash_bootstrap_components as dbc
 # import  dash_bootstrap_templates as dbt
 # from pages.login import layout as login_layout
 
+from logger import log
+
 
 # Exposing the Flask Server to enable configuring it for logging in
 server = Flask(__name__)
@@ -19,6 +21,7 @@ app = dash.Dash(
 
 # Load config
 with open('config/config.yaml', "r") as config_file:
+    log.info('Reading config')
     config = yaml.safe_load(config_file)
 
 # Keep this out of source code repository - save in a file or a database
@@ -80,6 +83,7 @@ def update_authentication_status(_):
     prevent_initial_call=True,
 )
 def login_button_click(n_clicks, username, password):
+    log.info(f'user {username} login/logout')
     if n_clicks > 0:
         if VALID_USERNAME_PASSWORD.get(username) is None:
             # return dcc.Location(pathname="/login", id="someid_doesnt_matter")
@@ -99,4 +103,5 @@ def login_button_click(n_clicks, username, password):
 
 if __name__ == "__main__":
     # app.run_server(debug=True)
+    log.info('start server')
     app.run_server(host='127.0.0.1', port=8050, debug=True)
