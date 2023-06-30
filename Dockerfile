@@ -28,6 +28,7 @@ WORKDIR /app/
 COPY pages/*.py /app/pages/
 COPY models/*.py /app/models/
 COPY t2e_gui.py /app/
+COPY logger.py /app/
 
 VOLUME /config
 
