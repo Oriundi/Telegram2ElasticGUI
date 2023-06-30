@@ -36,4 +36,4 @@ EXPOSE 8050
 
 #ENTRYPOINT ["/app/t2e_gui.py"]
 #CMD ["python", "t2e_gui.py"]
-CMD [ "gunicorn", "--workers=2", "--threads=2", "-b 127.0.0.1:8050", "t2e_gui:server"]
+CMD [ "gunicorn", "--workers=2", "--threads=2", "-b 0.0.0.0:8050", "t2e_gui:app"]
