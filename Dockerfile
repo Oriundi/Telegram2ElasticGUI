@@ -5,8 +5,8 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc
+#RUN apt-get update && \
+#    apt-get install -y --no-install-recommends gcc
 
 RUN python -m venv /opt/venv
 ## Enable venv
