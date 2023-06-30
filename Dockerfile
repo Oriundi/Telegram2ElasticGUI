@@ -16,16 +16,15 @@ RUN pip install -r requirements.txt
 USER app
 
 FROM python:3.9-slim as runner
-WORKDIR /app/
 COPY --from=compiler /opt/venv /opt/venv
-
 ENV PATH="/opt/venv/bin:$PATH"
 
+WORKDIR /app/
 COPY pages/*.py /app/pages/
 COPY models/*.py /app/models/
 COPY t2e_gui.py /app/
 
-VOLUME /config
+VOLUME /sessions
 
 #ENTRYPOINT ["/app/t2e_gui.py"]
 CMD ["python", "t2e_gui.py"]
