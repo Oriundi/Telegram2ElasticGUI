@@ -7,12 +7,13 @@ RUN python -m venv /opt/venv
 # Enable venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-#RUN addgroup --gid 777 --system app && \
-#    adduser --no-create-home --shell /bin/false --disabled-password --uid 777 --system --group app
+RUN addgroup --gid 777 --system app && \
+    adduser --no-create-home --shell /bin/false --disabled-password --uid 777 --system --group app
 
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-#USER app
+USER app
 
 FROM python:3.9-slim as runner
 WORKDIR /app/
@@ -22,7 +23,6 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 COPY pages/*.py /app/pages/
 COPY models/*.py /app/models/
-COPY requirements.txt /app/
 COPY t2e_gui.py /app/
 
 VOLUME /config
