@@ -1,7 +1,12 @@
 FROM python:3.10-slim as compiler
-ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc
 
 RUN python -m venv /opt/venv
 ## Enable venv
@@ -15,7 +20,7 @@ RUN pip install -r requirements.txt
 
 USER app
 
-FROM python:3.9-slim as runner
+FROM python:3.10-slim as runner
 COPY --from=compiler /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
