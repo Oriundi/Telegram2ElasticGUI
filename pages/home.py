@@ -11,7 +11,7 @@ import pandas as pd
 
 from logger import log
 
-dash.register_page(__name__)
+dash.register_page(__name__, path='/')
 
 
 def layout():
