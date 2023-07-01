@@ -34,7 +34,7 @@ def get_chats():
         "_source": False
     }
 
-    data = conn_raw.search(body=req, index=config['index_format'])['aggregations']['unique_names']['buckets']
+    data = conn_raw.search(body=req, index=config['elasticsearch']['index_format'])['aggregations']['unique_names']['buckets']
     chats = list()
     for value in data:
         chats.append({'label': value['key'], 'value': value['key']})
@@ -55,7 +55,7 @@ def get_users():
         },
         "_source": False
     }
-    data = conn_raw.search(body=req, index=config['index_format'])['aggregations']['unique_names']['buckets']
+    data = conn_raw.search(body=req, index=config['elasticsearch']['index_format'])['aggregations']['unique_names']['buckets']
     users = list()
     for value in data:
         users.append({'label': value['key'], 'value': value['key']})
@@ -81,7 +81,7 @@ def generate_sql(date_from=pd.Timestamp.now().strftime('%Y-%m-%d'),
             SELECT 
                 * 
             FROM 
-                "{config['index_format']}"
+                "{config['elasticsearch']['index_format']}"
             WHERE
                 timestamp  >= '{date_from}'
         '''
@@ -212,9 +212,9 @@ def get_messages(date_from, condition='AND', search_words=None, username=None, c
                          chat=chat
                         )
     if limit == 0:
-        data = conn_raw.search(index=config['index_format'], query=sql, size=10000, sort='timestamp:desc')
+        data = conn_raw.search(index=config['elasticsearch']['index_format'], query=sql, size=10000, sort='timestamp:desc')
     else:
-        data = conn_raw.search(index=config['index_format'], query=sql, size=limit, sort='timestamp:desc')
+        data = conn_raw.search(index=config['elasticsearch']['index_format'], query=sql, size=limit, sort='timestamp:desc')
     df = pd.DataFrame()
     while len(data['hits']['hits']) > 0:
         row = data['hits']['hits'].pop(0)
