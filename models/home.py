@@ -81,7 +81,7 @@ def generate_sql(date_from=pd.Timestamp.now().strftime('%Y-%m-%d'),
             SELECT 
                 * 
             FROM 
-                "{config['index_format']}" 
+                "{config['index_format']}"
             WHERE
                 timestamp  >= '{date_from}'
         '''

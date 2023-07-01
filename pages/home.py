@@ -9,19 +9,26 @@ from models.home import get_chats, get_users, get_messages
 
 import pandas as pd
 
-dash.register_page(__name__)
+from logger import log
+
+dash.register_page(__name__, path='/')
 
 
 def layout():
+    log.info(f'user {current_user} : is_authenticated {current_user.is_authenticated}')
     if not current_user.is_authenticated:
         return html.Div(["Please ", dcc.Link("login", href="/login"), " to continue"])
 
+    log.info('Get chats')
     chats = get_chats()
+    log.info('Get users')
     users = get_users()
 
+    log.info('Get latest messages')
     df = get_messages(date_from=date.today().strftime('%Y-%m-%d'))
     df['timestamp'] = pd.to_datetime(df['timestamp']).dt.tz_convert('Europe/Kiev').dt.strftime('%Y-%m-%d\n%H:%M:%S')
     df.sort_values(by=['timestamp'], ascending=[False], inplace=True)
+    log.info('Preparing output table')
     table_header = html.Tr([html.Th(column) for column in df.columns])
     table_header = [html.Thead(children=table_header)]
 
@@ -33,6 +40,8 @@ def layout():
         table_body.append(html.Tr(tr))
     # table_body = df.applymap(lambda x: html.Tr(html.Td(x))).values.tolist()
     table_body = [html.Tbody(id='message-data-body', children=table_body)]
+
+    log.info('Creating base layout')
 
     table = dbc.Table(
         id='message-data',
@@ -153,7 +162,11 @@ def layout():
            State('select-start-date', 'date')],
           config_prevent_initial_callbacks=True)
 def make_search(n_clicks, condition, words, chats, users, start_date):
+    log.info('NEW SEARCH')
+    log.info(f'date_from={start_date}, condition={condition}, search_words={words}, username={users}, chat={chats}, limit=0')
+    log.info('get messages')
     df = get_messages(date_from=start_date, condition=condition, search_words=words, username=users, chat=chats, limit=0)
+    log.info('Preparing table')
     table_header = html.Tr([html.Th(column) for column in df.columns])
     table_header = [html.Thead(children=table_header)]
 
@@ -171,4 +184,5 @@ def make_search(n_clicks, condition, words, chats, users, start_date):
             table_body.append(html.Tr(tr))
 
         table_body = [html.Tbody(id='message-data-body', children=table_body)]
+        log.info('Table with search is ready')
         return table_header + table_body
