@@ -90,7 +90,7 @@ def login_button_click(n_clicks, username, password):
             return "Невірний логін або пароль"
         if VALID_USERNAME_PASSWORD.get(username) == password:
             login_user(User(username))
-            return dcc.Location(pathname="/home", id="home-id")
+            return dcc.Location(pathname="/", id="home-id")
             # return "Login Successful"
         # return dcc.Location(pathname="/login", id="output-state")
         return "Невірний логін або пароль"
